@@ -7,11 +7,16 @@ import pandas as pd
 # data came from netresec.com/?page=PcapFiles "Network Forensics"
 
 file_name = "./http_internal.csv"
-period = '1min' #1min or 30S
-sample_rate = 30
+period = '10S' #1min or 30S
+sample_rate = 1
+filterTime = False
+startTime = '09:00'
+endTime = '10:00'
 
 orgdata = pd.read_csv(f"{file_name}",index_col='frame.time', parse_dates=True)
 data = orgdata['http.host']
+if filterTime:
+    data = data.between_time(startTime,endTime)
 countsperperiod = data.resample(period).count()
 print(f"length of countsperperiod: {len(countsperperiod)}")
 print(f"countsperperiod: {countsperperiod}")
