@@ -8,7 +8,7 @@ import pandas as pd
 
 file_name = "./http_internal.csv"
 period = '10S' #1min or 30S
-sample_rate = 1
+sample_rate = 10
 filterTime = False
 startTime = '09:00'
 endTime = '10:00'
