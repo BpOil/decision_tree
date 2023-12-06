@@ -1,0 +1,156 @@
+machine learning: from history to application 
+date: 20231127 
+
+eric.bachura@utsa.edu
+ericbachura@gmail.com
+ericbachura@arche-ai.com
+eric@bachura.com 
+
+data: factual elements representing some characterists of something. come in variuos data types. most related to "input feature space" 
+    features == variables 
+information: an understanding of something; often an understanding of procedural nature 
+knowledge: awareness of facts (data) and information (often about a particular thing)
+    any machine learning model is building knowledge
+learning: the acquisition of knowledge through experience 
+intelligence: the ability to acquire and apply knowledge
+
+symantic: has meaning 
+
+artificial intelligence: a set of computing processes and components that can interact with the real world in a manner indistinguishable from human interaction 
+machine learning: the use of computer processes and components to alogorithmically derive patterns where aspects (parameters) of the algorithm are a function of the algorithm as it is applied to data 
+
+supervied learning: a learning process that models the relationship between a set of data and a chosen characterist where the values of the chosen characterist is known 
+    given a set of values and the output of an unknown function applied to that set, derive the function such that the output 
+    "you have already decided a ground truth" most of everyone's education is a supervised learning. there is a right answer. 
+unsupervised learning: a learning process that models latent patterns and structures in data for some general purpose 
+    there is no evaluatory feature that is used to inform the process 
+    "there is no ground truth. it focuses on developing an understanding of a relationship between things" 
+    e.g. clustering, dimension reduction, outlier identification 
+
+hyperparameter: something that the developer sets. the machine learning model will never change the hyperparameter. the model can change the parameters 
+
+supervised techniques:
+    decision trees (random forests)
+        the simplest and fastest 
+        least performant overall 
+        good place to start to get a quick high level overview to determine if there is knowledge to gain from a data set. 
+        wants to use features near the root of the tree that reduce the entropy of the results at the end 
+    neural networks 
+        large number of hyperparameters 
+        most robust overall 
+    support vector machines 
+        (SVM specific term) hyperplane: the seperating boundary at n-1 dimensions (e.g. for 2 dimension the hyperplane would be a line; for 3 dimensions he hyperplane would be a plane)
+        usual goal is to seperate features. 
+        very resource intensive
+
+The Analytic Process:
+    1. What is the task? 
+    2. Where is the data?
+        what inside the data is relevant and what is not relevant to the problem/task? 
+        a bias model comes from bias data or including irrelevant input features that gives the model to shortcut to an answer (i.e. providing name as input feature to amazon's resume model which in turn throws away female names so that it is likely to match the current male dominated workforce at amazon)
+    3. What are the features? 
+    4. How should we model? 
+    5. What do model results tell us? 
+
+machine learning libraries:  
+    SKLearn:
+        only uses a CPU. can not use a GPU 
+        these models are standalone. 
+        it's possible to serialize them (use pickle or joblib (Dr. Eric likes joblib over pickle)) and plug and play with the same model somewhere else 
+        call SVM as SVC
+    TensorFlow:
+        oriented towards neural networks 
+
+different types of models:
+    a regressor/a scorer: can have continuous values 
+        might not do a good job predicting values outside of the range of X-grid values that were used to train the model. 
+    a classifier: has finite number of values a variable/feature could be 
+
+tools:
+    flask (guncorn)
+    cornado 
+    nginx for proxy service 
+
+
+# Influence Net Modeling with Causal Strengths: An Evolutionary Approach. Julie A. Rosen & Wayne L. Smith 
+# bs4. BeautifulSoup is a library that can return HTML objects. it's easier to navigate HTML objects using the BeautifulSoup library. should be used when using the selenium or request libraries. 
+# M-Disc is the cheapest and a reliable form of cold storage. best for storing raw data that you don't use as much any more. 
+# store data in various formats. always a copy of it's rawest form. then keep copies of the data when you feature engineer and maybe the data when it's in its training format. 
+# it's best to normalize your data. you would like each feature to be on it's own scale. for example if you use word count as a feature, word count can vary widely among text, therefore, large word count values could have a big impact on the model whereas if you were to scale or normalize the word count feature it can help your model train faster and reduce the variance in your models performance 
+
+# Entropy formula
+    # entropy = 0
+    # for property in properties:
+    #   countOfProperty = len(df[(df[col]==property)])
+    #   entropy += (countOfProperty / totalCountOfRecords) * math.log2((countOfProperty / totalCountOfRecords))
+    # entropy = entropy * -1 
+# typically want to calculate the entropy of your target (the classification of the observations), because a good decision trees wants to reduce the entropy of your target. it wants the target to be as deterministic as possible 
+# "Predictive Power Score (PPS) in Python" is another way to determine which features have a good chance to predict the target value. this could help you determine which features have a big impact in determining the target.  
+
+roc_auc (Area Under Curve) score is better determining factor of how good your model is vs the accuracy score 
+roc_auc and accuracy are the two more important metrics for your model. maximize these values as much as possible. 
+other test you can run to get idea of how good your model is:
+    mean squared error (MSE)
+    mean absolute error (MAE)
+    root mean squared error (RMSE) (take the square root of the MSE so that it's normalized to compare to MAE)
+    R^2 (%"how good does the data match the line of best fit")
+
+explaination for variables in "machine_learning_modeling_*.py":
+    dataT: data frame with training data
+    dataH: data frame with "hold out" data
+        compare against data 
+        data that is used to test your trained model to see how well it can do. 
+        the model should not train on this data.
+        this data should only be seen by the model when you're trying to see how good your model is 
+    xfeaturelist: array of x features
+    yfeature: target feature
+    rf_scorer: get metrics that measure how good your random forest scorer/regessor is (how good is your random forest scorer model)
+    rf_classifier: get metrics that measure how good your random forest classifier is (how good is your random forest classifier model)
+
+Random Notes from Class:
+    EMBA: 
+        security analyzer for firmware 
+        https://github.com/e-m-b-a/emba
+    Create your own ChatGPT:
+        https://github.com/openchatai/OpenChat
+    Benford's Law / Law of First Digit:
+        https://statisticsbyjim.com/probability/benfords-law/#:~:text=This%20law%20states%20that%20approximately,occur%2011.1%25%20of%20the%20time.
+        there is a natural distribution of the leading number in a digit on aggregatable metrics
+        most datasets follow this distribution, but NOT all 
+        sometimes, you can use this Law to identify anomalies if a dataset does not follow this distribution. It could hint that there has been fradulant activity or foraged numbers.
+    Librosa: 
+        A great python library for audio analysis and music analysis 
+        can be used to create audio features for ML 
+        https://librosa.org/doc/latest/index.html
+    Best Libraries for Visualizing Machine Learning Models/Metrics:
+        Seaborn: https://seaborn.pydata.org/
+            Statistical Data Visualization
+        Yellowbrick: https://www.scikit-yb.org/en/latest/
+            Machine Learning Visualization
+    Harvard released a dictionary that classifies words to positive or negative connotation:
+        Harvard General Inquirer
+        https://inquirer.sites.fas.harvard.edu/
+        https://inquirer.sites.fas.harvard.edu/homecat.htm
+        Dr. Eric Bachura has a clean dictionary of the harvard results called "hv4.dic"
+        This data set can be used to produce textual features for ML models 
+        This data set can perform text analysis 
+    Project Ideas from Dr. Eric Bachura:
+        Log analysis using character frequency testing 
+        Log analysis using Fast Fourier Transform 
+            https://www.knime.com/blog/fourier-transform-anomaly-detection
+            https://en.wikipedia.org/wiki/Fourier_transform
+            https://www.reddit.com/r/mathematics/comments/dws1e3/fourier_analysis_of_log_data_it_security/
+            https://www.youtube.com/watch?v=twI4pllhElY
+                speaker's email: joe.petroske@target.com | might be willing to share code for this 
+                "Applied Data Science for Cybersecurity Professional Certificate"
+                https://www.sei.cmu.edu/education-outreach/credentials/credential.cfm?customel_datapageid_14047=348770
+            python script: https://community.splunk.com/t5/Security/Detecting-Beaconing-Using-Fourier-Transform-FFT/m-p/580294
+        Detect Beaconing using RITA 
+            https://github.com/activecm/rita
+            Jupyter Notebooks Implementation of RITA: https://github.com/Cyb3r-Monk/RITA-J 
+        Log analysis using KPSS test 
+            https://www.statisticshowto.com/kpss-test/
+            https://www.machinelearningplus.com/time-series/kpss-test-for-stationarity/
+
+joe.petroske@target.com 
+Hunting Beacon Activity with Fourier Transforms 
