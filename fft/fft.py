@@ -8,13 +8,18 @@ import pandas as pd
 
 file_name = "./http_internal.csv"
 period = '10S' #1min or 30S
-sample_rate = 10
+sample_rate = 1
+filterData = False
+filterCol = 'url'
+filterValues = 'skype.com|google.com|track.adform.net'
 filterTime = False
 startTime = '09:00'
 endTime = '10:00'
 
-orgdata = pd.read_csv(f"{file_name}",index_col='frame.time', parse_dates=True)
-data = orgdata['http.host']
+orgdata = pd.read_csv(f"{file_name}",index_col='time', parse_dates=True)
+if filterData:
+    data = orgdata[orgdata[filterCol].str.contains(filterValues) != True]
+data = data['url']
 if filterTime:
     data = data.between_time(startTime,endTime)
 countsperperiod = data.resample(period).count()
