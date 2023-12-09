@@ -1,4 +1,4 @@
-frame.time,http.host,ip.src
+time,url,source_ip
 "Mar 17, 2015 01:28:13.964639000 UTC",mirrorlist.centos.org,192.168.0.2
 "Mar 17, 2015 01:28:14.118598000 UTC",mirrorlist.centos.org,192.168.0.2
 "Mar 17, 2015 01:28:14.258900000 UTC",mirrorlist.centos.org,192.168.0.2
